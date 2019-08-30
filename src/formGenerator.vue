@@ -5,6 +5,9 @@
 				:key="index"
 				v-bind="dragAnimation"
 				:sort="sort"
+				:component-data="getComponentAction"
+				:group="groupObj"
+				ghost-class="ghost"
 				:list="schema.fields">
 			<template v-for="(field,index) in fields">
 					<form-group
@@ -27,6 +30,14 @@
 				<legend v-if="group.legend">
 					{{ group.legend }}
 				</legend>
+				<draggable
+					:key="index"
+					v-bind="dragAnimation"
+					:sort="sort"
+					:group="groupObj"
+					ghost-class="ghost"
+					:component-data="getComponentAction"
+					:list="group.fields">
 				<template v-for="(field,index) in group.fields">
 					<form-group :key="index"
 								v-if="fieldVisible(field)"
@@ -39,6 +50,7 @@
 								@model-updated="onModelUpdated">
 					</form-group>
 				</template>
+				</draggable>
 			</fieldset>
 		</template>
 	</div>
@@ -61,7 +73,11 @@ export default {
 			default:true
 		},
 
+		getComponentAction: Function,
+
 		model: Object,
+
+		groupObj : Object,
 
 		options: {
 			type: Object,
