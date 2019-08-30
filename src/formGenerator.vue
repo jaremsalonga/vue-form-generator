@@ -1,27 +1,65 @@
-<template lang="pug">
-div.vue-form-generator(v-if='schema != null')
-	fieldset(v-if="schema.fields", :is='tag')
-		template(v-for='field in fields')
-			form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
-
-	template(v-for='group in groups')
-		fieldset(:is='tag', :class='getFieldRowClasses(group)')
-			legend(v-if='group.legend') {{ group.legend }}
-			template(v-for='field in group.fields')
-				form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+<template >
+	<div class="vue-form-generator" v-if="schema != null">
+		<fieldset v-if="schema.fields" :is="tag">
+			<draggable
+				:key="index"
+				v-bind="dragAnimation"
+				:sort="sort"
+				:list="schema.fields">
+			<template v-for="(field,index) in fields">
+					<form-group
+						v-if="fieldVisible(field)"
+						:vfg="vfg"
+						:key="index"
+						:field="field"
+						:errors="errors"
+						:model="model"
+						:options="options"
+						@validated="onFieldValidated"
+						@model-updated="onModelUpdated">
+					</form-group>
+			</template>
+			</draggable>
+		</fieldset>
+		<template
+			v-for="(group,parentIndex) in groups">
+			<fieldset :key="parentIndex" :is="tag" :class="getFieldRowClasses(group)">
+				<legend v-if="group.legend">
+					{{ group.legend }}
+				</legend>
+				<template v-for="(field,index) in group.fields">
+					<form-group :key="index"
+								v-if="fieldVisible(field)"
+								:vfg="vfg"
+								:field="field"
+								:errors="errors"
+								:model="model"
+								:options="options"
+								@validated="onFieldValidated"
+								@model-updated="onModelUpdated">
+					</form-group>
+				</template>
+			</fieldset>
+		</template>
+	</div>
 </template>
-
 <script>
 import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
 import formMixin from "./formMixin.js";
 import formGroup from "./formGroup.vue";
+import draggable from "vuedraggable";
 
 export default {
 	name: "formGenerator",
-	components: { formGroup },
+	components: { formGroup,draggable},
 	mixins: [formMixin],
 	props: {
 		schema: Object,
+
+		sort: {
+			type: Boolean,
+			default:true
+		},
 
 		model: Object,
 
@@ -76,6 +114,15 @@ export default {
 
 			return res;
 		},
+		dragAnimation() {
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+			return {
+				animation: 200,
+				group: "description",
+				disabled: false,
+				ghostClass: "ghost"
+			};
+		},
 		groups() {
 			let res = [];
 			if (this.schema && this.schema.groups) {
@@ -85,7 +132,8 @@ export default {
 			}
 
 			return res;
-		}
+		},
+
 	},
 
 	watch: {
