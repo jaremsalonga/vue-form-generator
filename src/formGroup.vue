@@ -114,7 +114,7 @@ export default {
 			if (this.$refs.child) {
 				return this.$refs.child.clearValidationErrors();
 			}
-		}
+		},
 	}
 };
 </script>

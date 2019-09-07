@@ -2,12 +2,8 @@
 	<div class="vue-form-generator" v-if="schema != null">
 		<fieldset v-if="schema.fields" :is="tag">
 			<draggable
-				:key="index"
 				v-bind="dragAnimation"
 				:sort="sort"
-				:component-data="getComponentAction"
-				:group="groupObj"
-				ghost-class="ghost"
 				:list="schema.fields">
 			<template v-for="(field,index) in fields">
 					<form-group
@@ -15,6 +11,7 @@
 						:vfg="vfg"
 						:key="index"
 						:field="field"
+						@click.native="returnSchemaField(field)"
 						:errors="errors"
 						:model="model"
 						:options="options"
@@ -30,27 +27,25 @@
 				<legend v-if="group.legend">
 					{{ group.legend }}
 				</legend>
-				<draggable
-					:key="index"
-					v-bind="dragAnimation"
-					:sort="sort"
-					:group="groupObj"
-					ghost-class="ghost"
-					:component-data="getComponentAction"
-					:list="group.fields">
 				<template v-for="(field,index) in group.fields">
-					<form-group :key="index"
+					<draggable
+						:key="index"
+						v-bind="dragAnimation"
+						:sort="sort"
+						:list="group.fields">
+					<form-group
 								v-if="fieldVisible(field)"
 								:vfg="vfg"
 								:field="field"
+								@click.native="returnSchemaField(field)"
 								:errors="errors"
 								:model="model"
 								:options="options"
 								@validated="onFieldValidated"
 								@model-updated="onModelUpdated">
 					</form-group>
+					</draggable>
 				</template>
-				</draggable>
 			</fieldset>
 		</template>
 	</div>
@@ -73,11 +68,7 @@ export default {
 			default:true
 		},
 
-		getComponentAction: Function,
-
 		model: Object,
-
-		groupObj : Object,
 
 		options: {
 			type: Object,
@@ -193,6 +184,10 @@ export default {
 			if (isNil(field.visible)) return true;
 
 			return field.visible;
+		},
+
+		returnSchemaField(obj) {
+			this.$emit("returnSchema", obj);
 		},
 
 		// Child field executed validation

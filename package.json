@@ -1,5 +1,5 @@
 {
-  "name": "vue-form-generator",
+  "name": "dnd-form-generator",
   "version": "2.3.4",
   "description": "A schema-based form generator component for Vue.js",
   "homepage": "https://github.com/vue-generators/vue-form-generator/",
@@ -38,7 +38,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vue-generators/vue-form-generator.git"
+    "url": "git+https://github.com/vue-generators/vue-form-generator.git"
   },
   "files": [
     "dist/vfg.js",
@@ -121,6 +121,7 @@
     "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
+    "np": "^5.0.3",
     "vuedraggable": "^2.23.0"
   },
   "publishConfig": {
@@ -151,5 +152,12 @@
     ],
     "report-dir": "./test/unit/coverage",
     "temp-directory": "./test/unit/coverage/.nyc_output"
+  },
+  "bugs": {
+    "url": "https://github.com/vue-generators/vue-form-generator/issues"
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
   }
 }
