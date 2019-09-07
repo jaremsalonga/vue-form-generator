@@ -1,5 +1,5 @@
 <template >
-	<div class="vue-form-generator" v-if="schema != null">
+	<div class="vue-form-generator hello" v-if="schema != null">
 		<fieldset v-if="schema.fields" :is="tag">
 			<draggable
 				v-bind="dragAnimation"
