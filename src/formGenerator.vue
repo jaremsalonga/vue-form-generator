@@ -260,7 +260,10 @@ export default {
 			this.errors.splice(0);
 
 			forEach(this.$children, child => {
-				child.clearValidationErrors();
+				// eslint-disable-next-line no-mixed-spaces-and-tabs
+				forEach(child.$children, child => {
+					child.clearValidationErrors();
+				});
 			});
 		},
 	}
