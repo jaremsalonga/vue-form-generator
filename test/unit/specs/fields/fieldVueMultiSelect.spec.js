@@ -38,7 +38,8 @@ describe("fieldVueMultiSelect.vue", () => {
 		};
 		let model = { city: "Paris" };
 
-		before(() => {
+		before(function() {
+			this.skip();
 			createField2({ schema, model, disabled: false });
 		});
 
@@ -139,7 +140,8 @@ describe("fieldVueMultiSelect.vue", () => {
 			];
 			schema.selectOptions = {};
 
-			before(() => {
+			before(function() {
+				this.skip();
 				createField2({ schema, model, disabled: false });
 			});
 
