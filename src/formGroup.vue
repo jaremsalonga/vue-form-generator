@@ -52,6 +52,9 @@ export default {
 			}
 		}
 	},
+	mounted() {
+		console.log("Form Group has Loaded");
+	},
 	methods: {
 		// Should field type have a label?
 		fieldTypeHasLabel(field) {
