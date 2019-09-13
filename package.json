@@ -122,6 +122,7 @@
   },
   "dependencies": {
     "np": "^5.0.3",
+    "vue-smooth-dnd": "^0.8.0",
     "vuedraggable": "^2.23.0"
   },
   "publishConfig": {
