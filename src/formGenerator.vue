@@ -11,7 +11,7 @@
 						:vfg="vfg"
 						:key="index"
 						:field="field"
-						@click.native="returnSchemaField(field)"
+						@click.native="returnSchemaField($event,field)"
 						:errors="errors"
 						:model="model"
 						:options="options"
@@ -37,7 +37,7 @@
 								v-if="fieldVisible(field)"
 								:vfg="vfg"
 								:field="field"
-								@click.native="returnSchemaField(field)"
+								@click.native="returnSchemaField($event,field)"
 								:errors="errors"
 								:model="model"
 								:options="options"
@@ -186,7 +186,9 @@ export default {
 			return field.visible;
 		},
 
-		returnSchemaField(obj) {
+		returnSchemaField(event,obj) {
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+		    event.preventDefault();
 			this.$emit("returnSchema", obj);
 		},
 
