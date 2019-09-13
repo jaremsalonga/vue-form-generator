@@ -5,7 +5,6 @@
 				v-bind="dragAnimation"
 				:sort="sort"
 				class="dragArea"
-				group="formField"
 				:list="schema.fields">
 			<template v-for="(field,index) in fields">
 					<form-group
@@ -127,7 +126,7 @@ export default {
 			// eslint-disable-next-line no-mixed-spaces-and-tabs
 			return {
 				animation: 200,
-				group: "description",
+				group: "formFields",
 				disabled: false,
 				ghostClass: "ghost"
 			};
