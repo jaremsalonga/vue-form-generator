@@ -972,8 +972,7 @@ describe("VueFormGenerator.vue", () => {
 		let field;
 		let onValidated = sinon.spy();
 
-		before(function() {
-			this.skip();
+		before(() => {
 			createFormGenerator(
 				{ schema, model },
 				{ onValidated: onValidated },

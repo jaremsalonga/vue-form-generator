@@ -1,11 +1,29 @@
 <template >
 	<div class="vue-form-generator" v-if="schema != null">
 		<fieldset v-if="schema.fields" :is="tag">
-			<Container group-name="formFields" @drop="dropZone">
-			<Draggable v-for="(field,index) in fields" :key="index">
+			<draggable
+				v-bind="dragAnimation"
+				:sort="sort"
+				class="dragArea"
+				@add="dropZone('add')"
+				@start="dropZone('start')"
+				@end="dropZone('end')"
+				@update="dropZone('update')"
+				@filter="dropZone('filter')"
+				@sort="dropZone('sort')"
+				@remove="dropZone('remove')"
+				@clone="dropZone('clone')"
+				@choose="dropZone('choose')"
+				@unchoose="dropZone('unchoose')"
+				@change="dropZone('change')"
+				@drop="dropZone('drop')"
+				@input="dropZone('input')"
+				:list="schema.fields">
+			<template v-for="(field,index) in fields">
 					<form-group
 						v-if="fieldVisible(field)"
 						:vfg="vfg"
+						:key="index"
 						:field="field"
 						@click.native="returnSchemaField(field)"
 						:errors="errors"
@@ -14,8 +32,8 @@
 						@validated="onFieldValidated"
 						@model-updated="onModelUpdated">
 					</form-group>
-			</Draggable>
-			</Container>
+			</template>
+			</draggable>
 		</fieldset>
 		<template
 			v-for="(group,parentIndex) in groups">
@@ -24,11 +42,15 @@
 					{{ group.legend }}
 				</legend>
 				<template v-for="(field,index) in group.fields">
+					<draggable
+						:key="index"
+						v-bind="dragAnimation"
+						:sort="sort"
+						:list="group.fields">
 					<form-group
 								v-if="fieldVisible(field)"
 								:vfg="vfg"
 								:field="field"
-								:key="index"
 								@click.native="returnSchemaField(field)"
 								:errors="errors"
 								:model="model"
@@ -36,6 +58,7 @@
 								@validated="onFieldValidated"
 								@model-updated="onModelUpdated">
 					</form-group>
+					</draggable>
 				</template>
 			</fieldset>
 		</template>
@@ -45,13 +68,13 @@
 import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
 import formMixin from "./formMixin.js";
 import formGroup from "./formGroup.vue";
-// import draggable from "vuedraggable";
-import { Container, Draggable } from "vue-smooth-dnd";
+import draggable from "vuedraggable";
+// import { Container, Draggable } from 'vue-smooth-dnd'
 // import { applyDrag, generateItems } from '../utils/helpers'
 
 export default {
 	name: "formGenerator",
-	components: { formGroup,Container,Draggable},
+	components: { formGroup,draggable},
 	mixins: [formMixin],
 	props: {
 		schema: Object,
@@ -260,9 +283,7 @@ export default {
 			forEach(this.$children, child => {
 				// eslint-disable-next-line no-mixed-spaces-and-tabs
 				forEach(child.$children, child => {
-					forEach(child.$children, child => {
-						child.clearValidationErrors();
-					});
+					child.clearValidationErrors();
 				});
 			});
 		},
