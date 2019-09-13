@@ -1,9 +1,10 @@
 <template >
-	<div class="vue-form-generator" v-if="schema != null">
+	<div class="vue-form-generator dragArea" v-if="schema != null">
 		<fieldset v-if="schema.fields" :is="tag">
 			<draggable
 				v-bind="dragAnimation"
 				:sort="sort"
+				group="people"
 				:list="schema.fields">
 			<template v-for="(field,index) in fields">
 					<form-group
