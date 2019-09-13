@@ -5,7 +5,19 @@
 				v-bind="dragAnimation"
 				:sort="sort"
 				class="dragArea"
-				@end="dropZone"
+				@add="dropZone('add')"
+				@start="dropZone('start')"
+				@end="dropZone('end')"
+				@update="dropZone('update')"
+				@filter="dropZone('filter')"
+				@sort="dropZone('sort')"
+				@remove="dropZone('remove')"
+				@clone="dropZone('clone')"
+				@choose="dropZone('choose')"
+				@unchoose="dropZone('unchoose')"
+				@change="dropZone('change')"
+				@drop="dropZone('drop')"
+				@input="dropZone('input')"
 				:list="schema.fields">
 			<template v-for="(field,index) in fields">
 					<form-group
@@ -180,9 +192,9 @@ export default {
 
 	methods: {
 		// eslint-disable-next-line no-mixed-spaces-and-tabs
-	    dropZone() {
+	    dropZone(v) {
 			// eslint-disable-next-line no-mixed-spaces-and-tabs
-	        console.log("ASDF");
+	        console.log(v);
 		},
 		// Get visible prop of field
 		fieldVisible(field) {
