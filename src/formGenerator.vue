@@ -5,7 +5,7 @@
 				v-bind="dragAnimation"
 				:sort="sort"
 				class="dragArea"
-				:group="{name: 'people' ,pull: false, put: true}"
+				group="formField"
 				:list="schema.fields">
 			<template v-for="(field,index) in fields">
 					<form-group
