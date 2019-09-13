@@ -5,6 +5,7 @@
 				v-bind="dragAnimation"
 				:sort="sort"
 				class="dragArea"
+				@end="dropZone"
 				:list="schema.fields">
 			<template v-for="(field,index) in fields">
 					<form-group
@@ -178,6 +179,11 @@ export default {
 	},
 
 	methods: {
+		// eslint-disable-next-line no-mixed-spaces-and-tabs
+	    dropZone() {
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+	        console.log("ASDF");
+		},
 		// Get visible prop of field
 		fieldVisible(field) {
 			if (isFunction(field.visible)) return field.visible.call(this, this.model, field, this);
